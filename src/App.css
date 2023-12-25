@@ -286,3 +286,15 @@ button {
   background-size:cover;
   background-repeat: no-repeat;
 }
+
+.account-tab .ant-tabs-tab-btn {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.account-tab .ant-tabs-ink-bar {
+  height: 4px !important;
+}
+.account-tab.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: white;
+}

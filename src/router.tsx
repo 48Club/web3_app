@@ -9,6 +9,7 @@ import AccountMobileBetch from "@/pages/account/AccountMobileBetch";
 import RootLayout from "./layout";
 import PageWrap from "./layout/page_wrap";
 import ComingSoon from "./pages/coming_soon";
+import Recap from "./pages/account/Recap";
 
 const routes = createHashRouter([
     {
@@ -48,6 +49,10 @@ const routes = createHashRouter([
             {
                 path: "/account/betch/:hash",
                 element: <AccountMobileBetch />
+            },
+            {
+                path: "/account/recap/:hash",
+                element: <Recap />
             }
             // {
             //     path: "/marketplace",

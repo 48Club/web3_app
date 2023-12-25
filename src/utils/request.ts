@@ -41,7 +41,7 @@ const inscriptionsApi = {
         page?: number;
         protocol?: string;
         status?: number,
-        // deployer?: string,
+        deploy_by?: string,
         tick_hash?: string,
         tick?:string,
     }) {

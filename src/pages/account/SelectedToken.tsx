@@ -1,6 +1,6 @@
 import { SearchResultList, useInscriptionsBetchTransferState, useInscriptionsEffectData, useInscriptionsSearchState } from "@/store";
 import { shorten } from "@/utils";
-import { Input, Radio, Spin, Typography } from "antd";
+import { Button, Input, Pagination, Radio, Spin, Tabs, Typography } from "antd";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getTabTypeStyleByTabType } from "../explorer/InscriptionsRecord";
@@ -8,6 +8,83 @@ import Container from "@/components/Container";
 import NoData from "@/components/NoData";
 import bnb48 from '@/assets/images/avatar.svg'
 import { getStaticUrl } from "@/App";
+import { useEthers } from "@usedapp/core";
+import inscriptionsApi, { pageSize } from "@/utils/request";
+import { ExplorerDataProps } from "@/utils/request.type";
+
+
+type MenuTypeKey = "ViewBalance" | "ManageDeployments" | "ViewDeployments";
+
+const RowHash: React.FC<{
+    data: ExplorerDataProps;
+    menuType: MenuTypeKey;
+}> = ({ data, menuType }) => {
+
+    const nav = useNavigate()
+
+    const { effectData } = useInscriptionsEffectData()
+
+    const curentData = effectData.find(d => d.tick_hash === data.tick_hash);
+
+    const progress = ((data.minted / data.max) * 100).toFixed(2)
+
+    let effectDatasParam = {
+        avatarIcon: bnb48,
+        lvIcon: '',
+        borderIcon: ""
+    };
+    if (curentData) {
+        effectDatasParam = {
+            borderIcon: getStaticUrl("border", curentData.border),
+            lvIcon: getStaticUrl("lv", curentData.lv),
+            avatarIcon: getStaticUrl("avatar", curentData.tick_hash)
+        }
+    }
+
+    return (
+        <div onClick={() => {
+            nav(`/explorer/detail/${data.tick_hash}`)
+        }} className="cursor-pointer border transition-all border-transparent rounded-[4px] h-[56px] flex flex-row justify-between items-center text-[14px] md:text-[16px]">
+            <div className="w-[60%] flex items-center text-[12px] text-[#E2B201] font-[400] leading-[24px]">
+                <div className="w-[28px] h-[28px] rounded-full relative">
+                    <img className="w-full h-full" src={effectDatasParam.avatarIcon} alt="" />
+                    {
+                        effectDatasParam.borderIcon && <img className="w-[42px] translate-x-[-50%] translate-y-[-50%] h-[42px] absolute left-[50%] top-[50%]" src={effectDatasParam.borderIcon} alt="" />
+                    }
+                </div>
+                <div className="ml-[6px]">
+                    <div className="flex items-center">
+                        <span className="font-[700]">{data.tick}</span>
+                        {
+                            effectDatasParam.lvIcon && <img className="w-[14px] h-[14px] mx-[2px]" src={effectDatasParam.lvIcon} alt="" />
+                        }
+                        <span className=" px-[6px] h-[17px] leading-[17px] inline-block font-[400] bg-[#1E1E1E] text-[10px] rounded-full text-[#F9F9F9]">BNB-48</span>
+                    </div>
+                    <div className="text-[#A9A9A9] opacity-70 text-[12px] font-[400] "><Typography.Paragraph className="m-[0_!important] explorer-copy-color" copyable={{ text: data.tick_hash }}>{shorten(data.tick_hash, 3)}</Typography.Paragraph> </div>
+                </div>
+            </div>
+            <div className="w-[100px] text-[12px]">
+                <p className="my-0">{progress}%</p>
+                <div className="w-[60px] h-[4px] overflow-hidden rounded-full bg-[rgba(255,200,1,.2)]">
+                    <div style={{ width: `${progress}%` }} className="h-full rounded-full bg-[#FFC801]"></div>
+                </div>
+            </div>
+            <div className="w-[100px] flex justify-end">
+                {
+                    menuType === "ManageDeployments" && +progress < 100 ?
+                        <Button onClick={(e) => {
+                            e.stopPropagation()
+                            nav(`/account/recap/${data.tick_hash}`)
+                        }} className="bg-[#FFFFFF] h-[32px] w-[76px]">Recap</Button>
+                        :
+                        <Button onClick={(e) => {
+                            e.stopPropagation()
+                        }} className="bg-[#FFFFFF] opacity-20 h-[32px] w-[76px]">Recap</Button>
+                }
+            </div>
+        </div>
+    )
+}
 
 const Row: React.FC<{
     data: SearchResultList;
@@ -36,46 +113,32 @@ const Row: React.FC<{
         }
     }
 
-
-    const ItemNode = (<>
-        <div className="flex-1 flex items-center text-[12px] text-[#E2B201] font-[400] leading-[24px]">
-            <div className="w-[28px] h-[28px] rounded-full relative">
-                <img className="w-full h-full" src={effectDatasParam.avatarIcon} alt="" />
-                {
-                    effectDatasParam.borderIcon && <img className="w-[42px] translate-x-[-50%] translate-y-[-50%] h-[42px] absolute left-[50%] top-[50%]" src={effectDatasParam.borderIcon} alt="" />
-                }
-            </div>
-            <div className="ml-[6px]">
-                <div className="flex items-center">
-                    <span className="font-[700]">{data.tick}</span>
-                    {
-                        effectDatasParam.lvIcon && <img className="w-[14px] h-[14px] mx-[2px]" src={effectDatasParam.lvIcon} alt="" />
-                    }
-                    <span className=" px-[6px] h-[17px] leading-[17px] inline-block font-[400] bg-[#1E1E1E] text-[10px] rounded-full text-[#F9F9F9]">BNB-48</span>
-                </div>
-                <div className="text-[#A9A9A9] opacity-70 text-[12px] font-[400] "><Typography.Paragraph className="m-[0_!important] explorer-copy-color" copyable={{ text: data.tick_hash }}>{shorten(data.tick_hash)}</Typography.Paragraph> </div>
-            </div>
-            {/* <div className="ml-[8px] flex-1 leading-[20px]">
-                <p className="flex items-center my-0 font-[700]">{data.tick}<span className="ml-[4px] h-[17px] w-[46px] flex-center leading-[17px] font-[400] bg-[rgba(217,217,217,.4)] text-[10px] rounded-full text-[#F9F9F9]">BNB-48</span></p>
-                <div className="text-[10px] leading-[12px] text-[#A9A9A9]">
-                    <Typography.Paragraph className="m-[0_!important] explorer-copy-color text-[10px]" copyable={{ text: data.tick_hash }}>{shorten(data.tick_hash)}</Typography.Paragraph>
-                </div>
-            </div> */}
-        </div>
-        {/* <div className="flex justify-center">
-            {data.decimals || '-'}
-        </div> */}
-        <div className="flex justify-center">
-            {data.amount || '-'}
-        </div>
-    </>)
-
     return (
         <div onClick={() => {
             click();
             nav(`/account/betch/${data.tick_hash}-${searchText}`)
         }} className="cursor-pointer border transition-all border-transparent rounded-[4px] h-[56px] flex flex-row justify-between items-center text-[14px] md:text-[16px]">
-            {ItemNode}
+            <div className="w-[60%] flex items-center text-[12px] text-[#E2B201] font-[400] leading-[24px]">
+                <div className="w-[28px] h-[28px] rounded-full relative">
+                    <img className="w-full h-full" src={effectDatasParam.avatarIcon} alt="" />
+                    {
+                        effectDatasParam.borderIcon && <img className="w-[42px] translate-x-[-50%] translate-y-[-50%] h-[42px] absolute left-[50%] top-[50%]" src={effectDatasParam.borderIcon} alt="" />
+                    }
+                </div>
+                <div className="ml-[6px]">
+                    <div className="flex items-center">
+                        <span className="font-[700]">{data.tick}</span>
+                        {
+                            effectDatasParam.lvIcon && <img className="w-[14px] h-[14px] mx-[2px]" src={effectDatasParam.lvIcon} alt="" />
+                        }
+                        <span className=" px-[6px] h-[17px] leading-[17px] inline-block font-[400] bg-[#1E1E1E] text-[10px] rounded-full text-[#F9F9F9]">BNB-48</span>
+                    </div>
+                    <div className="text-[#A9A9A9] opacity-70 text-[12px] font-[400] "><Typography.Paragraph className="m-[0_!important] explorer-copy-color" copyable={{ text: data.tick_hash }}>{shorten(data.tick_hash)}</Typography.Paragraph> </div>
+                </div>
+            </div>
+            <div className="w-[40%]">
+                {data.amount || '-'}
+            </div>
         </div>
     )
 }
@@ -84,9 +147,48 @@ const SelectedToken = ({ onSearch }: any) => {
 
     const { setSelectedToken, betchTransferState } = useInscriptionsBetchTransferState()
 
-    const { result, loading, setSearchTextHash, searchTextHash } = useInscriptionsSearchState()
+    const { result, loading, setLoading, searchText, setSearchTextHash, searchTextHash } = useInscriptionsSearchState()
 
-    const [tabType, setTabType] = useState("bnb-48");
+    const [menuType, setMenuType] = useState<MenuTypeKey>("ViewBalance");
+    const [tabType, setTabType] = useState<string>('bnb-48')
+
+    const { account } = useEthers()
+
+
+    const [page, setPage] = useState(1);
+    const [total, setTotal] = useState(0);
+    const [records, setRecord] = useState<ExplorerDataProps[]>([])
+
+    const getInscriptionsData = async () => {
+        setLoading(true)
+
+        const _searchText = {
+            tick_hash: '',
+            tick: '',
+            deploy_by: searchText
+        }
+
+        if (searchTextHash.startsWith("0x") && searchTextHash.length === 66) {
+            _searchText.tick_hash = searchTextHash;
+        } else {
+            // 其他则是tick
+            _searchText.tick = searchTextHash;
+        }
+        const param = {
+            status: 0, page, protocol: tabType, ..._searchText
+        }
+        inscriptionsApi.getInscriptionsList(param).then((res) => {
+            setLoading(false)
+            if (res.code === 0) {
+                console.log(res.data, 'res')
+                setTotal(res.data.count);
+                setRecord(res.data.list);
+            }
+        }).catch(() => {
+            setLoading(false)
+        })
+    }
+
 
     const resultList = useMemo(() => {
         return result
@@ -98,13 +200,57 @@ const SelectedToken = ({ onSearch }: any) => {
         }
     }, [])
 
+    useEffect(() => {
+        if(searchTextHash === '' && menuType !== "ViewBalance") {
+            getInscriptionsData()
+        }
+    }, [searchTextHash, menuType])
+
+    useEffect(() => {
+        setSearchTextHash('')
+        if (menuType !== "ViewBalance") {
+            getInscriptionsData()
+        }
+    }, [menuType])
+
+    const isMyAddress = useMemo(() => {
+        const isManage = searchText?.toLocaleLowerCase() === account?.toLocaleLowerCase();
+        return isManage;
+    }, [searchText, account]);
+
+
+    useEffect(() => {
+        if(isMyAddress && menuType === "ViewDeployments") {
+            setMenuType("ManageDeployments")
+        } else {
+            if(menuType === "ManageDeployments") {
+                setMenuType("ViewDeployments")
+            }
+        }
+    }, [isMyAddress])
+
     return <Container className=" border-[#3F3F3F] border bg-[#000000CC] rounded-[4px] pt-[32px] pb-[32px] min-h-[600px] px-[24px]">
         <div className="diy-scrollbar">
-            <Radio.Group className="h-[50px]" value={tabType} onChange={(val) => setTabType(val.target.value)}>
-                <Radio.Button value="bnb-48" style={getTabTypeStyleByTabType(tabType, 'bnb-48')} className=" leading-[40px] flex-1 h-[40px] text-center no-border">BNB-48</Radio.Button>
+            <Radio.Group className="h-[50px]" value={menuType} onChange={(val) => setMenuType(val.target.value)}>
+                <Radio.Button value="ViewBalance" style={getTabTypeStyleByTabType(menuType, 'ViewBalance')} className=" leading-[40px] flex-1 h-[40px] text-center no-border">View Balance</Radio.Button>
+                {
+                    isMyAddress ?
+                        <Radio.Button value="ManageDeployments" style={getTabTypeStyleByTabType(menuType, 'ManageDeployments')} className=" leading-[40px] ml-[16px] flex-1 h-[40px] text-center no-border">Manage Deployments</Radio.Button>
+                        :
+                        <Radio.Button value="ViewDeployments" style={getTabTypeStyleByTabType(menuType, 'ViewDeployments')} className=" leading-[40px] ml-[16px] flex-1 h-[40px] text-center no-border">View Deployments</Radio.Button>
+                }
             </Radio.Group>
         </div>
-        <div className="items-center justify-between flex my-[32px]">
+        <div className="mt-[14px] flex items-center justify-between">
+            <Tabs activeKey={tabType} onChange={(e) => setTabType(e)} items={[
+                {
+                    label: "BNB-48",
+                    key: 'bnb-48',
+                }
+            ]} tabBarGutter={32} className="hide-tabs-bottom-line account-tab explorer-table-menu-type"></Tabs>
+            {/* <Checkbox checked={myDeployed} className="check-rouded-full hidden md:flex" onChange={(e) => setMyDeployed(e.target.checked)}>My Deployed</Checkbox> */}
+        </div>
+        <div className="items-center justify-between flex mt-[24px] mb-[32px]">
             <Input.Search
                 placeholder="Enter a tick-hash"
                 className="w-full rounded-[4px] h-[48px] border border-yellows border-[#FFC801]"
@@ -122,7 +268,13 @@ const SelectedToken = ({ onSearch }: any) => {
                     </svg>
                 }}
                 suffix={
-                    <div onClick={() => onSearch()} className="h-full flex items-center">
+                    <div onClick={() => {
+                        if(menuType === "ViewBalance") {
+                            onSearch()
+                        } else {
+                            getInscriptionsData()
+                        }
+                    }} className="h-full flex items-center">
                         <svg className=" cursor-pointer" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fillRule="evenodd" clipRule="evenodd" d="M23.0271 21.6144L23.0306 21.6213C23.3407 21.9968 23.3717 22.6342 23.0961 23.0477L23.0857 23.0615L23.0754 23.0718C22.8962 23.2544 22.6516 23.344 22.3449 23.344C22.0417 23.344 21.7937 23.251 21.6145 23.0718L16.7874 18.2482C14.9372 19.6987 12.7804 20.4636 10.534 20.4636C9.21092 20.4636 7.92232 20.2018 6.70608 19.6815C5.53119 19.1819 4.47688 18.4653 3.56384 17.5557C2.65424 16.6461 1.93759 15.5883 1.438 14.4134C0.921183 13.1972 0.655884 11.9086 0.655884 10.5855C0.655884 9.26248 0.917737 7.97044 1.438 6.7473C1.93759 5.56552 2.65424 4.50432 3.56384 3.58783C4.47343 2.67135 5.53119 1.9478 6.70264 1.44477C7.92232 0.921061 9.21092 0.655762 10.534 0.655762C11.857 0.655762 13.1456 0.917615 14.3653 1.43788C15.5402 1.93747 16.5945 2.65412 17.5075 3.56372C18.4206 4.47331 19.1338 5.53106 19.6334 6.70596C20.1502 7.9222 20.4155 9.2108 20.4155 10.5338C20.4155 12.8699 19.6299 15.0818 18.2035 16.7908L23.0271 21.6144ZM2.66458 10.5855C2.66458 14.9233 6.19271 18.4549 10.534 18.4549C14.8718 18.4549 18.4034 14.9268 18.4034 10.5855C18.4034 6.24425 14.8718 2.71612 10.534 2.71612C6.19616 2.71612 2.66458 6.2477 2.66458 10.5855Z" fill="#FFC801" />
                         </svg>
@@ -131,18 +283,39 @@ const SelectedToken = ({ onSearch }: any) => {
             />
         </div>
         <div className="flex flex-row mt-[32px] justify-between items-center leading-[24px] mb-[12px] text-[16px] font-[400]">
-            <div className="flex-1 text-[#A9A9A9]">Token</div>
-            <div className="flex-1 text-[#A9A9A9] justify-end flex">Balance</div>
+            <div className="w-[60%] text-[#A9A9A9]">Token</div>
+            {
+                menuType === "ViewBalance" ?
+                    <div className="flex-1 text-[#A9A9A9]">Balance</div>
+                    :
+                    <>
+                        <div className="w-[100px] text-[#A9A9A9]">Progress</div>
+                        <div className="w-[100px] text-[#A9A9A9]"></div>
+                    </>
+            }
         </div>
         <Spin spinning={loading} size="large">
             {
-                resultList.length > 0 ?
-                    resultList.map((i) => {
-                        return <Row active={betchTransferState.tick_hash === i.tick_hash} click={() => setSelectedToken(i)} key={i.tick_hash} data={i} />
-                    })
-                    : <NoData />
+                menuType === "ViewBalance" ?
+                    (resultList.length > 0 ?
+                        resultList.map((i) => {
+                            return <Row active={betchTransferState.tick_hash === i.tick_hash} click={() => setSelectedToken(i)} key={i.tick_hash} data={i} />
+                        })
+                        : <NoData />)
+                    :
+                    records.length > 0 ?
+                        records.map((i) => {
+                            return <RowHash menuType={menuType} key={i.tick_hash} data={i} />
+                        })
+                        : <NoData />
+
             }
         </Spin>
+        {
+            menuType !== "ViewBalance" && <div className="justify-center md:hidden flex mt-[32px] pb-[40px]">
+                <Pagination showSizeChanger={false} pageSize={pageSize} current={page} onChange={setPage} className="table-pagination-btn" defaultCurrent={1} total={total} />
+            </div>
+        }
     </Container>
 }
 
