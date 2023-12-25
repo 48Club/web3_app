@@ -1,0 +1,47 @@
+
+@keyframes just_up_move {
+    0% {
+        opacity: 0;
+        -webkit-transform: translateX(100vw);
+        transform: translateX(100vw)
+    }
+  
+    7% {
+        opacity: 1;
+        -webkit-transform: translateX(80vw);
+        transform: translateX(80vw)
+    }
+  
+    35% {
+        opacity: 1;
+        -webkit-transform: translateX(0);
+        transform: translateX(0)
+    }
+  
+    40% {
+        opacity: 0;
+        -webkit-transform: translateX(-20vw);
+        transform: translateX(-20vw)
+    }
+  }
+
+ .bubble-wrap .bubble {
+    animation: just_up_move 5s linear infinite;
+    animation-fill-mode: both;
+    opacity: 0
+}
+
+
+@keyframes rotate-reload-animate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(180deg);
+    }
+}
+
+.reload-animate {
+    animation: rotate-reload-animate 1s linear;
+    transform-origin: center;
+}
