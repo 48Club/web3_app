@@ -33,7 +33,9 @@ const ExplorerDetailHeader: React.FC<{
     const miners = useMemo(() => {
         if (detail?.miners) {
             const _minersStr = detail.miners.split(',');
-            const _miners = DEPLOY_MINERS.filter(miner => _minersStr.includes(miner.address));
+            const _miners = DEPLOY_MINERS.filter(miner => {
+                return _minersStr.includes(miner.address.toLocaleLowerCase());
+            });
             return _miners;
         } else {
             return []
