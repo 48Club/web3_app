@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 // import { useRequest } from "ahooks";
 import { shorten, switchStyle } from "@/utils";
 import { ExplorerDataProps } from "@/utils/request.type";
-import bnb48 from '@/assets/images/bnb-48.svg'
+import bnb48 from '@/assets/images/avatar.svg'
 
 import oldIcon from '@/assets/images/old.png'
 import Container from "@/components/Container";

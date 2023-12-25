@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { effectData, getTabTypeStyleByTabType } from "../explorer/InscriptionsRecord";
 import Container from "@/components/Container";
 import NoData from "@/components/NoData";
-import bnb48 from '@/assets/images/bnb-48.svg'
+import bnb48 from '@/assets/images/avatar.svg'
 
 const Row: React.FC<{
     data: SearchResultList;
