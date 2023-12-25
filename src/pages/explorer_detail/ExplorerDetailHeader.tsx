@@ -136,7 +136,7 @@ const ExplorerDetailHeader: React.FC<{
                 <div className="mt-[60px] flex items-center">
                     <div className="flex items-center">
                         <h1 className="text-[28px] font-[700] leading-[24px] text-[#FFFFFF]">{detail.tick}</h1>
-                        <span className="ml-[8px] text-[10px] leading-[12px] px-[6px] py-[4px] text-[#FFFFFF] bg-[rgba(217,217,217,0.4)] rounded-full">{detail.protocol}</span>
+                        <span className="ml-[8px] text-[10px] leading-[12px] px-[6px] py-[4px] text-[#FFFFFF] bg-[rgba(217,217,217,0.4)] rounded-full">{detail?.protocol?.toLocaleUpperCase()}</span>
                     </div>
                     <svg
                         onClick={(e: any) => {

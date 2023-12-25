@@ -1,4 +1,5 @@
 
+import { App as Antd } from 'antd';
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 
 const Copy: React.FC<{
@@ -7,9 +8,11 @@ const Copy: React.FC<{
     className?: string;
 }> = ({ text, children, className }) => {
 
+    const { message } = Antd.useApp()
+
     return <div className={className}>
         <CopyToClipboard text={text}>
-            <div>{children}</div>
+            <div onClick={() => message.success("Copy Success")}>{children}</div>
         </CopyToClipboard>
     </div>
 }
