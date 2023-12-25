@@ -1,4 +1,4 @@
-import { Button, Dropdown, App as AntdApp } from "antd";
+import { Button, Dropdown } from "antd";
 import Container from "../Container";
 
 import minLogoIcon from '@/assets/logo.png'
@@ -17,6 +17,7 @@ import { CopyOutlined } from "@ant-design/icons";
 import { switchChain } from "@/constants/chain";
 import { useLocation } from "react-router-dom";
 import useIsChainId from "@/hooks/useChainId";
+import Copy from "../Copy";
 
 const openLink = (key: string) => {
     switch (key) {
@@ -48,8 +49,6 @@ const Header = () => {
     const nav = useNavigate()
 
     const { activateBrowserWallet, deactivate, account } = useEthers()
-
-    const { message } = AntdApp.useApp()
 
     const local = useLocation()
 
@@ -121,13 +120,10 @@ const Header = () => {
                                         </svg>
                                         Logout
                                     </div>
-                                    <div onClick={() => {
-                                        navigator.clipboard.writeText(account);
-                                        message.success("Copy Success")
-                                    }} className="w-full h-[40px] flex items-center px-[12px] cursor-pointer text-[14px] font-[400] text-[#FFFFFF]">
+                                    <Copy className="w-full h-[40px] flex items-center px-[12px] cursor-pointer text-[14px] font-[400] text-[#FFFFFF]" text={account}>
                                         <CopyOutlined size={14} className="mr-[5px]" />
                                         Copy
-                                    </div>
+                                    </Copy>
                                 </div>
                             }} placement="bottomLeft" arrow>
                                 <Button className=" text-[#1B1B1B] justify-center px-0 flex items-center bg-[#FFFFFF] w-[76px] h-[32px] ml-[12px]">

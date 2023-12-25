@@ -11,6 +11,7 @@ import { ExplorerDataProps } from "@/utils/request.type";
 import Container from "@/components/Container";
 import Label from "@/components/Label";
 import useIsChainId from "@/hooks/useChainId";
+import Copy from "@/components/Copy";
 
 const ExplorerDetailHeader: React.FC<{
     detail: ExplorerDataProps;
@@ -32,7 +33,7 @@ const ExplorerDetailHeader: React.FC<{
 
     const miners = useMemo(() => {
         if (detail?.miners) {
-            const _minersStr = detail.miners.split(',');
+            const _minersStr = detail.miners.split(',').map(a => a.toLocaleLowerCase());
             const _miners = DEPLOY_MINERS.filter(miner => {
                 return _minersStr.includes(miner.address.toLocaleLowerCase());
             });
@@ -123,15 +124,14 @@ const ExplorerDetailHeader: React.FC<{
                         <path d="M15.828 21L21.192 26.364L19.778 27.778L12 20L19.778 12.222L21.192 13.636L15.828 19L28 19L28 21L15.828 21Z" fill="white" />
                     </svg>
                     <Label text="Inscriptions" />
-                    <Button className="ml-auto h-[40px] disabled:bg-[#eee] disabled:text-[#000] bg-[#FFC801]" onClick={() => {
-                        navigator.clipboard.writeText(`data:,{
+                    <Copy className="ml-auto h-[40px] disabled:bg-[#eee] disabled:text-[#000] bg-[#FFC801]" text={`data:,{
                             "p":"${detail.protocol}",
                             "op":"mint",
                             "tick-hash":"${param.id}",
                             "amt":"${detail.lim}"
-                        }`.replace(/\s*/g, ''));
-                        message.success("Copy Success")
-                    }}>Copy Mint Data</Button>
+                        }`.replace(/\s*/g, '')}>
+                        <Button className=" h-[40px] disabled:bg-[#eee] disabled:text-[#000] bg-[#FFC801]">Copy Mint Data</Button>
+                    </Copy>
                 </div>
                 <div className="mt-[60px] flex items-center">
                     <div className="flex items-center">

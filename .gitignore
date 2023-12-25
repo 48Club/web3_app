@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 package.json
+yarn.lock
+.yarn.lock
 
 # Editor directories and files
 .vscode/*

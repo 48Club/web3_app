@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import { ConfigProvider, ThemeConfig, App as AntdApp } from 'antd'
-import { BNB, Config, DAppProvider } from '@usedapp/core'
+import { BSC, Config, DAppProvider } from '@usedapp/core'
 import { Provider } from 'jotai'
 
 const theme: ThemeConfig = {
@@ -27,7 +27,11 @@ const theme: ThemeConfig = {
 }
 
 const config: Config = {
-  readOnlyChainId: BNB.chainId
+  networks: [BSC],
+  readOnlyChainId: BSC.chainId,
+  readOnlyUrls: {
+    [BSC.chainId]: 'https://bsc-dataseed.binance.org/'
+  }
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

@@ -1,10 +1,42 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <meta
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, maximum-scale=1.0,user-scalable=no"
+      name="viewport"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BNB-48-Inscriptions</title>
+    <script>
+      document.documentElement.addEventListener(
+        "touchstart",
+        function (event) {
+          if (event.touches.length > 1) {
+            event.preventDefault();
+          }
+        },
+        false
+      );
+
+      var lastTouchEnd = 0;
+      document.documentElement.addEventListener(
+        "touchend",
+        function (event) {
+          var now = Date.now();
+          if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+          }
+          lastTouchEnd = now;
+        },
+        false
+      );
+
+      document.addEventListener("gesturestart", function (event) {
+        event.preventDefault();
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>
