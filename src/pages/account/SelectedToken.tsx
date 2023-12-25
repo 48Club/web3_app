@@ -3,7 +3,7 @@ import { shorten } from "@/utils";
 import { Input, Radio, Spin, Typography } from "antd";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { effectData, getTabTypeStyleByTabType } from "../explorer/InscriptionsRecord";
+import { getTabTypeStyleByTabType } from "../explorer/InscriptionsRecord";
 import Container from "@/components/Container";
 import NoData from "@/components/NoData";
 import bnb48 from '@/assets/images/avatar.svg'
@@ -23,10 +23,10 @@ const Row: React.FC<{
             {
                 data.tick_hash === "0xd893ca77b3122cb6c480da7f8a12cb82e19542076f5895f21446258dc473a7c2" ?
                     <div className="w-[28px] h-[28px] rounded-full relative">
-                        <img className="w-full h-full" src={effectData.icon} alt="" />
+                        {/* <img className="w-full h-full" src={effectData.icon} alt="" />
                         <div className="absolute bottom-0 w-[13px] h-[13px] right-0">
                             {effectData.lv}
-                        </div>
+                        </div> */}
                     </div>
                     :
                     <div className="w-[28px] h-[28px] rounded-full relative">

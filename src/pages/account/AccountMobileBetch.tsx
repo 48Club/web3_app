@@ -74,7 +74,6 @@ const AccountMobileBetch = () => {
         }
     }, [account])
 
-
     return <Container className="mt-[82px]">
         <div className="flex items-center mt-[32px]">
             <svg onClick={() => nav(-1)} width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">

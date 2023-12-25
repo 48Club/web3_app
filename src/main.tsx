@@ -1,4 +1,4 @@
-import React from 'react'
+import { Suspense } from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
@@ -36,12 +36,14 @@ const config: Config = {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <Provider>
-    <DAppProvider config={config}>
-      <ConfigProvider theme={theme}>
-        <AntdApp>
-          <App />
-        </AntdApp>
-      </ConfigProvider>
-    </DAppProvider>
+    <Suspense fallback={null}>
+      <DAppProvider config={config}>
+        <ConfigProvider theme={theme}>
+          <AntdApp>
+            <App />
+          </AntdApp>
+        </ConfigProvider>
+      </DAppProvider>
+    </Suspense>
   </Provider>,
 )
