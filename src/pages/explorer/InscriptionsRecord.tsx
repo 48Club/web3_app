@@ -238,27 +238,28 @@ const Inscriptions = () => {
     const getInscriptionsData = async (loading: boolean) => {
         loading && setLoading(true)
 
-        // const _searchText = {
-        //     tick_hash: '',
-        //     tick: '',
-        //     deployer: '',
-        // }
+        const _searchText = {
+            tick_hash: '',
+            tick: '',
+        }
         // 如果选中my deployed
         // if (myDeployed) {
         //     _searchText.deployer = account as string;
         //     setEnterVal('');
         //     // 如果地址以0x开头,并且是66位,是tick_hash
-        // } else if (enterVal.startsWith("0x") && enterVal.length === 66) {
-        //     _searchText.tick_hash = enterVal;
-        // } else {
-        //     // 其他则是tick
-        //     _searchText.tick = enterVal;
-        // }
+        // } else 
+        if (enterVal.startsWith("0x") && enterVal.length === 66) {
+            _searchText.tick_hash = enterVal;
+        } else {
+            // 其他则是tick
+            _searchText.tick = enterVal;
+        }
         const param = {
             tick_hash: '', status: +tableMenuKey, page, protocol: tabType
         }
         inscriptionsApi.getInscriptionsList(enterVal ? {
-            tick_hash: enterVal
+            ...param,
+            ..._searchText,
         } : param).then((res) => {
             setLoading(false)
             if (res.code === 0) {

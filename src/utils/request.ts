@@ -43,7 +43,7 @@ const inscriptionsApi = {
         status?: number,
         // deployer?: string,
         tick_hash?: string,
-        // tick?:string,
+        tick?:string,
     }) {
         const pararms: any = {
             ...param,

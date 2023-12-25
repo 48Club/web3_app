@@ -17,10 +17,26 @@ const TransfersRow: React.FC<{
             </div>
             <div className="w-[80px] flex items-center cursor-pointer text-[#A9A9A9]">
                 {
-                    data.is_pending ? 
-                    <span className=" opacity-40">pending</span>
-                    :
-                    <span className="">confirmed</span>
+                    data.is_pending ?
+                        <div className="flex items-center">
+                            <div className="spinner center">
+                                <div className="spinner-blade"></div>
+                                <div className="spinner-blade"></div>
+                                <div className="spinner-blade"></div>
+                                <div className="spinner-blade"></div>
+                                <div className="spinner-blade"></div>
+                                <div className="spinner-blade"></div>
+                                <div className="spinner-blade"></div>
+                                <div className="spinner-blade"></div>
+                                <div className="spinner-blade"></div>
+                                <div className="spinner-blade"></div>
+                                <div className="spinner-blade"></div>
+                                <div className="spinner-blade"></div>
+                            </div>
+                            <span className="ml-[4px] opacity-40">pending</span>
+                        </div>
+                        :
+                        <span className="">confirmed</span>
                 }
             </div>
             <div className="w-[80px] flex items-center cursor-pointer">
