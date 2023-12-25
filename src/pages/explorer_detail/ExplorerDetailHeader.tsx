@@ -26,6 +26,7 @@ const ExplorerDetailHeader: React.FC<{
 
     const { message, modal } = AntdApp.useApp()
 
+    
     const param = useParams()
 
     const { isTrueChainId } = useIsChainId()
