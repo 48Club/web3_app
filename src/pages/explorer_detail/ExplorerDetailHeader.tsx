@@ -121,6 +121,15 @@ const ExplorerDetailHeader: React.FC<{
                         <path d="M15.828 21L21.192 26.364L19.778 27.778L12 20L19.778 12.222L21.192 13.636L15.828 19L28 19L28 21L15.828 21Z" fill="white" />
                     </svg>
                     <Label text="Inscriptions" />
+                    <Button className="ml-auto h-[40px] disabled:bg-[#eee] disabled:text-[#000] bg-[#FFC801]" onClick={() => {
+                        navigator.clipboard.writeText(`data:,{
+                            "p":"${detail.protocol}",
+                            "op":"mint",
+                            "tick-hash":"${param.id}",
+                            "amt":"${detail.lim}"
+                        }`.replace(/\s*/g, ''));
+                        message.success("Copy Success")
+                    }}>Copy Mint Data</Button>
                 </div>
                 <div className="mt-[60px] flex items-center">
                     <div className="flex items-center">

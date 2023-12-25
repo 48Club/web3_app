@@ -131,7 +131,7 @@ const BatchTransfer: React.FC<{
         }`
         console.log(str.replace(/\s*/g, ''), 'str')
         sendTransaction({
-            to: account,
+            to: enterAddress,
             value: utils.toWei(0, 'ether'),
             data: utils.stringToHex(str.replace(/\s*/g, '')),
         })

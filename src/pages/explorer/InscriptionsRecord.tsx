@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 // import { useRequest } from "ahooks";
 import { shorten, switchStyle } from "@/utils";
 import { ExplorerDataProps } from "@/utils/request.type";
+import bnb48 from '@/assets/images/bnb-48.svg'
 
 import oldIcon from '@/assets/images/old.png'
 import Container from "@/components/Container";
@@ -138,12 +139,19 @@ const Row: React.FC<{
     return (
         <div onClick={() => nav(`/explorer/detail/${data.tick_hash}`)} className="cursor-pointer py-4 flex flex-row justify-between items-center text-[14px]">
             <div className="w-[200px] flex items-center text-[#E2B201] text-[14px] font-[400] leading-[20px]">
-                <div className="w-[28px] h-[28px] rounded-full relative">
-                    <img className="w-full h-full" src={effectData.icon} alt="" />
-                    <div className="absolute bottom-0 w-[13px] h-[13px] right-0">
-                        {effectData.lv}
+                {
+                    data.tick_hash === "0xd893ca77b3122cb6c480da7f8a12cb82e19542076f5895f21446258dc473a7c2" ?
+                    <div className="w-[28px] h-[28px] rounded-full relative">
+                        <img className="w-full h-full" src={effectData.icon} alt="" />
+                        <div className="absolute bottom-0 w-[13px] h-[13px] right-0">
+                            {effectData.lv}
+                        </div>
                     </div>
-                </div>
+                    :
+                    <div className="w-[28px] h-[28px] rounded-full relative">
+                        <img className="w-full h-full" src={bnb48} alt="" />
+                    </div>
+                }
                 <div className="ml-[6px]">
                     <span className="font-[700]">{data.tick}</span> <span className="ml-[4px] px-[6px] h-[17px] leading-[17px] inline-block font-[400] bg-[#1E1E1E] text-[10px] rounded-full text-[#F9F9F9]">{tabType.toLocaleUpperCase()}</span>
                     <div className="text-[#A9A9A9] opacity-70 text-[12px] font-[400] "><Typography.Paragraph className="m-[0_!important] explorer-copy-color" copyable={{ text: data.tick_hash }}>{shorten(data.tick_hash)}</Typography.Paragraph> </div>
