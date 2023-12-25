@@ -1,4 +1,4 @@
-import { SearchResultList, useInscriptionsBetchTransferState, useInscriptionsSearchState } from "@/store";
+import { SearchResultList, useInscriptionsBetchTransferState, useInscriptionsEffectData, useInscriptionsSearchState } from "@/store";
 import { shorten } from "@/utils";
 import { Input, Radio, Spin, Typography } from "antd";
 import { useEffect, useMemo, useState } from "react";
@@ -7,6 +7,7 @@ import { getTabTypeStyleByTabType } from "../explorer/InscriptionsRecord";
 import Container from "@/components/Container";
 import NoData from "@/components/NoData";
 import bnb48 from '@/assets/images/avatar.svg'
+import { getStaticUrl } from "@/App";
 
 const Row: React.FC<{
     data: SearchResultList;
@@ -18,27 +19,48 @@ const Row: React.FC<{
 
     const { searchText } = useInscriptionsSearchState()
 
+    const { effectData } = useInscriptionsEffectData()
+
+    const curentData = effectData.find(d => d.tick_hash === data.tick_hash);
+
+    let effectDatasParam = {
+        avatarIcon: bnb48,
+        lvIcon: '',
+        borderIcon: ""
+    };
+    if (curentData) {
+        effectDatasParam = {
+            borderIcon: getStaticUrl("border", curentData.border),
+            lvIcon: getStaticUrl("lv", curentData.lv),
+            avatarIcon: getStaticUrl("avatar", curentData.tick_hash)
+        }
+    }
+
+
     const ItemNode = (<>
         <div className="flex-1 flex items-center text-[12px] text-[#E2B201] font-[400] leading-[24px]">
-            {
-                data.tick_hash === "0xd893ca77b3122cb6c480da7f8a12cb82e19542076f5895f21446258dc473a7c2" ?
-                    <div className="w-[28px] h-[28px] rounded-full relative">
-                        {/* <img className="w-full h-full" src={effectData.icon} alt="" />
-                        <div className="absolute bottom-0 w-[13px] h-[13px] right-0">
-                            {effectData.lv}
-                        </div> */}
-                    </div>
-                    :
-                    <div className="w-[28px] h-[28px] rounded-full relative">
-                        <img className="w-full h-full" src={bnb48} alt="" />
-                    </div>
-            }
-            <div className="ml-[8px] flex-1 leading-[20px]">
+            <div className="w-[28px] h-[28px] rounded-full relative">
+                <img className="w-full h-full" src={effectDatasParam.avatarIcon} alt="" />
+                {
+                    effectDatasParam.borderIcon && <img className="w-[42px] translate-x-[-50%] translate-y-[-50%] h-[42px] absolute left-[50%] top-[50%]" src={effectDatasParam.borderIcon} alt="" />
+                }
+            </div>
+            <div className="ml-[6px]">
+                <div className="flex items-center">
+                    <span className="font-[700]">{data.tick}</span>
+                    {
+                        effectDatasParam.lvIcon && <img className="w-[14px] h-[14px] mx-[2px]" src={effectDatasParam.lvIcon} alt="" />
+                    }
+                    <span className=" px-[6px] h-[17px] leading-[17px] inline-block font-[400] bg-[#1E1E1E] text-[10px] rounded-full text-[#F9F9F9]">BNB-48</span>
+                </div>
+                <div className="text-[#A9A9A9] opacity-70 text-[12px] font-[400] "><Typography.Paragraph className="m-[0_!important] explorer-copy-color" copyable={{ text: data.tick_hash }}>{shorten(data.tick_hash)}</Typography.Paragraph> </div>
+            </div>
+            {/* <div className="ml-[8px] flex-1 leading-[20px]">
                 <p className="flex items-center my-0 font-[700]">{data.tick}<span className="ml-[4px] h-[17px] w-[46px] flex-center leading-[17px] font-[400] bg-[rgba(217,217,217,.4)] text-[10px] rounded-full text-[#F9F9F9]">BNB-48</span></p>
                 <div className="text-[10px] leading-[12px] text-[#A9A9A9]">
                     <Typography.Paragraph className="m-[0_!important] explorer-copy-color text-[10px]" copyable={{ text: data.tick_hash }}>{shorten(data.tick_hash)}</Typography.Paragraph>
                 </div>
-            </div>
+            </div> */}
         </div>
         {/* <div className="flex justify-center">
             {data.decimals || '-'}
