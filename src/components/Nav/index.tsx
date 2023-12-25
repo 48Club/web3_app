@@ -83,8 +83,8 @@ const Nav = () => {
                         </g>
                     </g>
                     <defs>
-                        <filter id="filter0_f_2439_15098" x="-2.0274" y="4" width="115.863" height="47" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                        <filter id="filter0_f_2439_15098" x="-2.0274" y="4" width="115.863" height="47" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                            <feFlood floodOpacity="0" result="BackgroundImageFix" />
                             <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
                             <feGaussianBlur stdDeviation="9" result="effect1_foregroundBlur_2439_15098" />
                         </filter>

@@ -1,3 +1,4 @@
+import { switchChain } from "@/constants/chain";
 import { useInscriptionsIsTrueChainStore } from "@/store";
 import { BSC, useEthers } from "@usedapp/core";
 import { useEffect } from "react";
@@ -16,7 +17,10 @@ const useIsChainId = () => {
     }
 
     useEffect(() => {
-        if(window?.ethereum) {
+        if(window?.ethereum && account) {
+            if(Number(window.ethereum.networkVersion) !== BSC.chainId) {
+                switchChain("Default")
+            }
             chainChange(Number(window.ethereum.networkVersion))
             window?.ethereum.on('chainChanged', chainChange);
         }

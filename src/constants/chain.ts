@@ -31,12 +31,8 @@ export const BNBDefaultChain: any = {
   chainId: "0x" + BNBChainId.toString(16),
   chainName: BSC.chainName,
   rpcUrls: BSC.rpcUrl,
-  blockExplorerUrls: ["https://bscscan.com"],
-  nativeCurrency: {
-    name: "BNB",
-    symbol: "BNB",
-    decimals: 18,
-  },
+  blockExplorerUrls: [BSC.blockExplorerUrl],
+  nativeCurrency: BSC.nativeCurrency
 };
 
 export const switchChain = async (type: "1Ggei" | "3Ggei" | "Default") => {
@@ -53,7 +49,9 @@ export const switchChain = async (type: "1Ggei" | "3Ggei" | "Default") => {
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
-        params: [switchChainValue],
+        params: [{
+          chainId: switchChainValue.chainId
+        }],
       });
     } catch (error) {
       await window.ethereum.request({
