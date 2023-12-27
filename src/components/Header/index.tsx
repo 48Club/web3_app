@@ -64,12 +64,22 @@ const Header = () => {
 
     useEffect(() => {
         console.log(local, 'local.pathname')
-        if(local.pathname === '/') {
+        if(local.pathname === "/explorer" || local.pathname === '/') {
             setTabKey('explorer')
-        } else {
-            const arr = local.pathname.split('/')
-            setTabKey(arr[arr.length - 1])
         }
+
+        if(local.pathname === "/account") {
+            setTabKey('account')
+        }
+
+        if(local.pathname === "/coming-soon") {
+            setTabKey('coming-soon')
+        }
+
+        if(local.pathname === "/marketplace") {
+            setTabKey('marketplace')
+        }
+
     }, [local.pathname])
 
     return <>
@@ -175,7 +185,7 @@ const Header = () => {
             </div>
         </div>
         <div style={{ transform: showMenu ? "translateX(0)" : 'translateX(200vw)' }} className="w-full h-full transition-transform fixed top-[60px] left-0 z-[98] menu-mobile-bg">
-            <div style={{height: window.innerHeight - 60 }} onClick={() => setShowMenu(false)} className="px-[5.333vw] text-white overflow-y-scroll">
+            <div style={{height: window.innerHeight -60 }} onClick={() => setShowMenu(false)} className="px-[5.333vw] text-white overflow-y-scroll">
                 <h1 onClick={() => setTabKey("explorer")} className="text-[20px] font-[600] my-[6vw]">Explorer</h1>
                 <i className="block w-full h-[1px] bg-white opacity-10"></i>
                 <h1 onClick={() => setTabKey("account")} className="text-[20px] font-[600] my-[6vw]">Account</h1>
