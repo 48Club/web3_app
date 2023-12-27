@@ -49,6 +49,28 @@ const Nav = () => {
                     </defs>
                 </svg>
             </div>
+            <div onClick={() => setTabKey("marketplace")} className="ml-[18px] relative h-full">
+                <h1 style={getTitleStyleByTabKey(tabKey, "marketplace")} className="text-[#FFFFFF] transition-all text-[20px] z-10 relative font-[400] leading-[20px] my-0">Marketplace</h1>
+                <svg style={getLineStyleByTabKey(tabKey, "marketplace")} className=" absolute transition-opacity bottom-0 z-[9]" width="110" height="22" viewBox="0 0 110 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect y="18" width="110" height="4" fill="#FFC801" />
+                    <mask id="mask0_2517_6055" style={{ maskType: "alpha" }} maskUnits="userSpaceOnUse" x="0" y="0" width="110" height="18">
+                        <path d="M0 18H110V0H0V18Z" fill="#FFC801" />
+                    </mask>
+                    <g mask="url(#mask0_2517_6055)">
+                        <g filter="url(#filter0_f_2517_6055)">
+                            <ellipse cx="58.0138" cy="27.5" rx="41.4384" ry="5.5" fill="#FFC801" />
+                        </g>
+                    </g>
+                    <defs>
+                        <filter id="filter0_f_2517_6055" x="-1.42456" y="4" width="118.877" height="47" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                            <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="9" result="effect1_foregroundBlur_2517_6055" />
+                        </filter>
+                    </defs>
+                </svg>
+
+            </div>
             <div onClick={() => setTabKey("account")} className="ml-[18px] relative h-full">
                 <h1 style={getTitleStyleByTabKey(tabKey, "account")} className="text-[#FFFFFF] transition-all text-[20px] z-10 relative font-[400] leading-[20px] my-0">Account</h1>
                 <svg style={getLineStyleByTabKey(tabKey, "account")} className=" absolute transition-opacity bottom-0 z-[9]" width="73" height="22" viewBox="0 0 73 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -90,25 +112,6 @@ const Nav = () => {
                         </filter>
                     </defs>
                 </svg>
-                {/* 
-                <svg style={getLineStyleByTabKey(tabKey, "coming-soon")} className=" absolute transition-opacity bottom-0 z-[9]" width="73" height="22" viewBox="0 0 73 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect y="18" width="73" height="4" fill="#FFC801" />
-                    <mask id="mask0_2401_2959" style={{maskType:"alpha"}} maskUnits="userSpaceOnUse" x="0" y="0" width="73" height="18">
-                        <rect width="73" height="18" transform="matrix(1 0 0 -1 0 18)" fill="#FFC801" />
-                    </mask>
-                    <g mask="url(#mask0_2401_2959)">
-                        <g filter="url(#filter0_f_2401_2959)">
-                            <ellipse cx="38.5" cy="27.5" rx="27.5" ry="5.5" fill="#FFC801" />
-                        </g>
-                    </g>
-                    <defs>
-                        <filter id="filter0_f_2401_2959" x="-7" y="4" width="91" height="47" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-                            <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-                            <feGaussianBlur stdDeviation="9" result="effect1_foregroundBlur_2401_2959" />
-                        </filter>
-                    </defs>
-                </svg> */}
             </div>
         </div>
 

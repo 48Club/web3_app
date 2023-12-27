@@ -235,9 +235,9 @@ const SelectedToken = ({ onSearch }: any) => {
                 <Radio.Button value="ViewBalance" style={getTabTypeStyleByTabType(menuType, 'ViewBalance')} className=" leading-[40px] flex-1 h-[40px] text-center no-border">View Balance</Radio.Button>
                 {
                     isMyAddress ?
-                        <Radio.Button value="ManageDeployments" style={getTabTypeStyleByTabType(menuType, 'ManageDeployments')} className=" leading-[40px] ml-[16px] flex-1 h-[40px] text-center no-border">Manage Deployments</Radio.Button>
+                        <Radio.Button value="ManageDeployments" style={getTabTypeStyleByTabType(menuType, 'ManageDeployments')} className=" leading-[40px] ml-[16px] flex-1 h-[40px] text-center no-border">Deployments</Radio.Button>
                         :
-                        <Radio.Button value="ViewDeployments" style={getTabTypeStyleByTabType(menuType, 'ViewDeployments')} className=" leading-[40px] ml-[16px] flex-1 h-[40px] text-center no-border">View Deployments</Radio.Button>
+                        <Radio.Button value="ViewDeployments" style={getTabTypeStyleByTabType(menuType, 'ViewDeployments')} className=" leading-[40px] ml-[16px] flex-1 h-[40px] text-center no-border">Deployments</Radio.Button>
                 }
             </Radio.Group>
         </div>

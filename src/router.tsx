@@ -10,6 +10,7 @@ import RootLayout from "./layout";
 import PageWrap from "./layout/page_wrap";
 import ComingSoon from "./pages/coming_soon";
 import Recap from "./pages/account/Recap";
+import Marketplace from "./pages/marketplace";
 
 const routes = createHashRouter([
     {
@@ -35,7 +36,11 @@ const routes = createHashRouter([
                     {
                         path: "/coming-soon",
                         element: <ComingSoon />
-                    }
+                    },
+                    {
+                        path: "/marketplace",
+                        element: <Marketplace />
+                    },
                 ]
             },
             {
@@ -53,11 +58,7 @@ const routes = createHashRouter([
             {
                 path: "/account/recap/:hash",
                 element: <Recap />
-            }
-            // {
-            //     path: "/marketplace",
-            //     element: <Marketplace />
-            // },
+            },
         ]
     }
 ])

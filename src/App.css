@@ -24,11 +24,16 @@
   font-weight: 400;
 }
 
-
 @font-face {
   font-family: "Rowdies";
   src: url('assets/font//Rowdies-Regular.ttf');
 }
+
+
+.font-Rowdies {
+  font-family: "Rowdies";
+}
+
 
 div,span,h1,h2,h3,h4,h5,h6,input,button {
   font-family: "Roboto";
@@ -36,6 +41,7 @@ div,span,h1,h2,h3,h4,h5,h6,input,button {
 
 .font-rowdies {
   font-family: "Rowdies";
+  font-weight: 400;
 }
 
 body,
@@ -297,4 +303,16 @@ button {
 }
 .account-tab.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
   color: white;
+}
+
+
+.bg-line-market {
+  background-image: url("assets/images/market-bg-line.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.party-item {
+  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.05);
 }
