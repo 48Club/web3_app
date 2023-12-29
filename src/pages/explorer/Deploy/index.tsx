@@ -116,8 +116,8 @@ export const Deploy: React.FC = () => {
         "tick":"${res.tick}",
         "decimals":"${res.decimals}",
         "max":"${res.totalSupply * Math.pow(10, res.decimals)}",
-        "lim":"${res.limitPerMint * Math.pow(10, res.decimals)}",
-        "miners":${JSON.stringify(res.miners)}
+        "lim":"${res.limitPerMint * Math.pow(10, res.decimals)}"
+        ${res.miners.length > 0 ? `,"miners":${JSON.stringify(res.miners)}` : ''}
       }`
       console.log(str.replace(/\s*/g, ''), 'str')
 
