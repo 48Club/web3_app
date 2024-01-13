@@ -1,4 +1,4 @@
-
+import { ethers } from "ethers";
 
 export const shorten = (address: string | undefined, num: number=4) => {
     if(address === undefined) return '-';
@@ -7,14 +7,13 @@ export const shorten = (address: string | undefined, num: number=4) => {
 
 
 export const decimalsToStr = (num: number, decimals: number) => {
-    return num / Math.pow(10, decimals);
+    if(num === undefined || decimals === undefined) return 0;
+    return +ethers.utils.formatUnits(num.toString(), decimals).toString()
 }
-
 
 export const strToDecimals = (num: number, decimals: number) => {
-    return num * Math.pow(10, decimals);
+    return +ethers.utils.parseUnits(num.toString(), decimals).toString()
 }
-
 export const sleepAwait = (wait: number=5000) => {
     return new Promise((resolve) => {
         setTimeout(() => {
