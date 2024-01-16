@@ -30,6 +30,8 @@ const HistoryList: React.FC<{
 
     const [historyLoading, setHistoryLoading] = useState(false)
 
+    const [oneData, setOneData] = useState<HoldersRowDataProps>({} as HoldersRowDataProps)
+
     const getHoldersList = (loading: boolean = true) => {
         loading && setHistoryLoading(true)
         inscriptionsApi.getInscriptionsHoldersList({
@@ -50,6 +52,9 @@ const HistoryList: React.FC<{
                         rank: startRank + index + 1
                     }
                 });
+                if(resData[0] && holdersPage === 1) {
+                    setOneData(resData[0])
+                }
                 setHoldersRecords(resData);
             } else {
                 message.error({
@@ -145,7 +150,7 @@ const HistoryList: React.FC<{
                                 {
                                     holdersRecords.length > 0 ? (
                                         <>
-                                            {holdersRecords.map((i) => <HoldersRow oneData={holdersRecords[0]} key={i.address} data={i} />)}
+                                            {holdersRecords.map((i) => <HoldersRow oneData={oneData} key={i.address} data={i} />)}
 
                                         </>
                                     ) : <NoData />

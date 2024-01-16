@@ -10,7 +10,7 @@ const HoldersRow: React.FC<{
 
     const _progress = isNaN(data.progress) ? 0 : data.progress;
 
-    const show_progress = (data.amount / oneData.amount) * 100;
+    const show_progress = oneData.amount !== undefined ? (data.amount / oneData.amount) * 100 : _progress;
 
     return (
         <div onClick={() => window.open(`${window.location.origin}/#/account?address=${data.address}`)} className="cursor-pointer flex flex-row h-[60px] justify-between items-center border-b border-[rgba(234,234,234,.1)] text-[14px]">
